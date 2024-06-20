@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:audio_service/audio_service.dart';
@@ -804,8 +805,8 @@ class _PlayerAudioHandler extends BaseAudioHandler
       androidCompactActionIndices: List.generate(controls.length, (i) => i)
           .where((i) => controls[i].action != MediaAction.stop)
           .toList(),
-      processingState: const {
-        ProcessingStateMessage.idle: AudioProcessingState.idle,
+      processingState: {
+        ProcessingStateMessage.idle: Platform.isIOS ? AudioProcessingState.ready : AudioProcessingState.idle,
         ProcessingStateMessage.loading: AudioProcessingState.loading,
         ProcessingStateMessage.buffering: AudioProcessingState.buffering,
         ProcessingStateMessage.ready: AudioProcessingState.ready,
